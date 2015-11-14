@@ -6,6 +6,8 @@ from urllib2 import Request, urlopen, URLError
 API_KEY = 'AIzaSyBcL1cDvmIbM8Mnu_ty-iiodlxf6q0-7IQ'
 API_QUERY = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
 
+
+# Create an API query to Google Maps API
 def get_api_query(units, travel_mode, city1, city2):
 	origin_lat, origin_long = city1
 	destination_lat, destination_long = city2
@@ -18,6 +20,7 @@ def get_api_query(units, travel_mode, city1, city2):
 			+ '&mode=' + travel_mode + '&units=' + query_units + '&key=' + API_KEY
 	return api_query
 
+# Call the Query on the API
 def query_api(query):
 	request = Request(query)
 	try:
@@ -26,9 +29,11 @@ def query_api(query):
 	except URLError, e:
 		print("Invalid Query!", e)
 
+# Load the JSON into a dictionary
 def parse_JSON(json_obj):
 	return json.loads(json_obj)
 
+# Find distances given unit, and list of cities, and travel mode
 def find_distances(units, cities_list, travel_mode):
 
 	distances_list = []
@@ -48,19 +53,24 @@ def find_distances(units, cities_list, travel_mode):
 			city2_long = geocode2.longitude
 			coord1 = (city1_lat, city1_long)
 			coord2 = (city2_lat, city2_long)
+			# Crow's Flying
 			if travel_mode == 'default':
 				distance = find_direct_distance(units, coord1, coord2)
+
+			# A mode was specified, so we must call Google Maps API
 			else:
 				distance = find_distance_by_mode(units, travel_mode, coord1, coord2)
 			distances_list.append(distance)
 	return distances_list
 
+# Find the direct distance between two coordinates
 def find_direct_distance(units, coord1, coord2):
 	if units == 'kilometers':
 		return great_circle(coord1, coord2).kilometers
 	elif units == 'miles':
 		return great_circle(coord1, coord2).miles
 
+# Find distance by querying the API
 def find_distance_by_mode(units, travel_mode, coord1, coord2):
 	api_query = get_api_query(units, travel_mode, coord1, coord2)
 	response = query_api(api_query)

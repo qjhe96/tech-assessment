@@ -1,0 +1,22 @@
+Vacationing Salesman
+--------------------
+
+To run this script: python vacationingsalesman.py -u <kilometers or miles> -m <car or transit or biking or walking>
+
+You can also specify an input .txt file: python vacationingsalesman.py < cities.txt -u <kilometers or miles> -m <car or transit or biking or walking>
+
+I chose Python because I spent the most time working with this language, and it is easy to setup and write a script. It requires minimal setup and it interfaces well with external libraries. 
+
+I basically parsed the input file or stdin into a list of cities, which I pass into a function called find_distances. I use a list because it is easy to iterate over in Python. I store the results into a list, so that I can easily print to stdout afterwards by iterating through.
+Depending on whether the user specified a mode or not, I would calculate the direct crow's distance using the GeoPy module. This seemed the fastest way to get a distance between two cities. The Google Maps Distance Matrix API had the tools I needed to generate distances for different modes of travel. If a mode is specified, I create an API query to Google Maps Distance Matrix API, which accepts parameters origins, destinations, travel modes, and units. I parsed the resulting JSON object to extract the distance in kilometers or miles.
+
+I was hoping to address the last bonus point: how to generate the optimal itinerary.
+For this task, I would need to implement a variant of the Traveling Salesman Problem. I would have to create a graph class with each city contained in a node class and an edge between all cities. Then, for each city as a starting point, I would have to test all possible combinations of the cities in the itinerary. I must visit every other city from the starting point. For N cities, this would be 2^N possible routes that I can take. Then, I would have to keep track of the minimum distance route and return this at the end.
+
+
+Deck Of Cards
+-------------
+
+To run this: python cards.py
+
+For this deck of cards, I thought of using a python List as a Stack. I reseolved any ambiguity by noting that a required operation was to get the next card, which involves popping off the top element of the deck. This made me use a Stack to implement the deck. Also, the shuffle operation indicated that I would need to use the python random module to randomize my selections. Randomizing by first creating a full 52 deck card and randomly picking one each time was the best solution I could think of. I wrote tests in the main method to assert that the deck was 52 in length AND that it contained every single possible card in a deck of 52 cards. I tried removing all the cards and then shuffling and verifying the cards were complete. I would verify that Getting the next card would actually remove the card from the deck by checking the length of the deck.

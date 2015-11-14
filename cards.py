@@ -7,7 +7,7 @@ class Deck:
 		self.nums = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
 		self.deck = self.construct_deck()
 
-
+	# Construct a new deck of all 52 cards, and randomly pick one each time and add to new deck until the new deck is full
 	def shuffle(self):
 		to_shuffle = self.construct_deck()
 		new_deck = []
@@ -17,6 +17,7 @@ class Deck:
 			new_deck.append(random_card)
 		self.deck = new_deck
 
+	# Create a deck of 52 cards
 	def construct_deck(self):
 		new_deck = []
 		for suit in self.suits:
@@ -25,13 +26,14 @@ class Deck:
 				new_deck.append(new_card)
 		return new_deck
 
-
+	# Pop the top card from the stack
 	def get_next_card(self):
 		try:
 			return self.deck.pop()
 		except IndexError:
 			print('No more cards to deal!')
 
+	# Verify the deck contains every single possible card in a 52 card deck
 	def verify_deck(self):
 		full_deck = self.construct_deck()
 		for card in self.deck:
@@ -39,12 +41,15 @@ class Deck:
 				return False
 		return True
 
+
+#Container class for Card
 class Card:
 
 	def __init__(self, suit, num):
 		self.suit = suit
 		self.num = num
 
+	# Testing equality of two cards
 	def __eq__(self, card2):
 		return self.suit == card2.suit and self.num == card2.num
 
