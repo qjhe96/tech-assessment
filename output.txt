@@ -1,0 +1,6 @@
+Success! Your vacation itinerary is: 
+1
+"Paris, France"
+ -> "New York City, USA"
+: 3626.56694151 miles
+
